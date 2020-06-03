@@ -1,0 +1,33 @@
+# Recipe to install Code_Aster and dependencies inside Singularity container.
+# See: https://www.code-aster.org/spip.php?article272 for more details.
+
+Bootstrap: docker
+From: ubuntu:18.04
+
+%labels
+        MAINTAINER Tom Pritchard
+
+%post
+
+        apt-get -y update
+        apt-get install -y build-essential
+        apt-get install -y cmake
+        apt-get install -y wget
+        apt-get install -y gfortran
+        apt-get install -y python3
+        apt-get install -y python3-pip
+        apt-get install -y python3-dev
+        apt-get install -y python3-numpy
+        apt-get install -y python3-tk
+        apt-get install -y bison
+        apt-get install -y flex
+        apt-get install -y tk-dev
+        apt-get install -y grace
+        apt-get install -y liblapack-dev
+        apt-get install -y libboost-python-dev
+        apt-get install -y libboost-numpy-dev
+
+        wget https://www.code-aster.org/FICHIERS/aster-full-src-14.4.0-1.noarch.tar.gz
+        tar -zxvf aster-full-src-14.4.0-1.noarch.tar.gz
+        cd aster-full-src-14.4.0
+        python3 setup.py install --prefix=/opt/aster
