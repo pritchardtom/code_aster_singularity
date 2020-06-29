@@ -13,19 +13,20 @@ From: ubuntu:18.04
         apt-get install -y build-essential
         apt-get install -y cmake
         apt-get install -y wget
+        apt-get install -y nano
+        apt-get install -y emacs
         apt-get install -y gfortran
-        apt-get install -y python3
+        apt-get install -y libboost-all-dev # installs python3, python3-dev, libboost-python-dev, and libboost-numpy-dev
         apt-get install -y python3-pip
-        apt-get install -y python3-dev
         apt-get install -y python3-numpy
-        apt-get install -y python3-tk
+        apt-get install -y tk
         apt-get install -y bison
         apt-get install -y flex
-        apt-get install -y tk-dev
-        apt-get install -y grace
         apt-get install -y liblapack-dev
-        apt-get install -y libboost-python-dev
-        apt-get install -y libboost-numpy-dev
+        apt-get install -y libblas-dev
+
+        apt-get clean
+        apt autoremove -y
 
         wget https://www.code-aster.org/FICHIERS/aster-full-src-14.4.0-1.noarch.tar.gz
         tar -zxvf aster-full-src-14.4.0-1.noarch.tar.gz
