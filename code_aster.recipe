@@ -5,7 +5,9 @@ Bootstrap: docker
 From: ubuntu:18.04
 
 %labels
+
         MAINTAINER Tom Pritchard
+        VERSION v1.0
 
 %post
 
@@ -25,10 +27,66 @@ From: ubuntu:18.04
         apt-get install -y liblapack-dev
         apt-get install -y libblas-dev
 
-        apt-get clean
-        apt autoremove -y
+        export ASTER_INSTALL_DIR=/opt/aster
 
         wget https://www.code-aster.org/FICHIERS/aster-full-src-14.4.0-1.noarch.tar.gz
         tar -zxvf aster-full-src-14.4.0-1.noarch.tar.gz
         cd aster-full-src-14.4.0
-        python3 setup.py install --prefix=/opt/aster
+        python3 setup.py install --prefix=${ASTER_INSTALL_DIR}
+
+%environment
+
+        export LC_ALL=C
+        export ASTER_BASE=/opt/aster
+
+        # 14.4 dir:
+        export PATH=${ASTER_BASE}/14.4/bin:${PATH}
+        export C_INCLUDE_PATH=${ASTER_BASE}/14.4/include/aster:${C_INCLUDE_PATH}
+        export LD_LIBRARY_PATH=${ASTER_BASE}/14.4/lib/aster:${LD_LIBRARY_PATH}
+
+        # bin dir:
+        export PATH=${ASTER_BASE}/bin:${PATH}
+
+        # lib dir:
+        export LD_LIBRARY_PATH=${ASTER_BASE}/lib:${LD_LIBRARY_PATH}
+
+        # gmsh:
+        export PATH=${ASTER_BASE}/public/gmsh-3.0.6-Linux64/bin:${PATH}
+
+        # hdf5:
+        export PATH=${ASTER_BASE}/public/hdf5-1.10.3/bin:${PATH}
+        export C_INCLUDE_PATH=${ASTER_BASE}/public/hdf5-1.10.3/include:${C_INCLUDE_PATH}
+        export LD_LIBRARY_PATH=${ASTER_BASE}/public/hdf5-1.10.3/lib:${LD_LIBRARY_PATH}
+
+        # homard:
+        export PATH=${ASTER_BASE}/public/homard-11.12/ASTER_HOMARD
+
+        # med:
+        export PATH=${ASTER_BASE}/public/med-4.0.0/bin:${PATH}
+        export C_INCLUDE_PATH=${ASTER_BASE}/public/med-4.0.0/include:${C_INCLUDE_PATH}
+        export LD_LIBRARY_PATH=${ASTER_BASE}/public/med-4.0.0/lib:${LD_LIBRARY_PATH}
+
+        # metis:
+        export PATH=${ASTER_BASE}/public/metis-5.1.0/bin:${PATH}
+        export C_INCLUDE_PATH=${ASTER_BASE}/public/metis-5.1.0/include:${C_INCLUDE_PATH}
+        export LD_LIBRARY_PATH=${ASTER_BASE}/public/metis-5.1.0/lib:${LD_LIBRARY_PATH}
+
+        # mumps:
+        export C_INCLUDE_PATH=${ASTER_BASE}/public/mumps-5.1.2/include:${C_INCLUDE_PATH}
+        export C_INCLUDE_PATH=${ASTER_BASE}/public/mumps-5.1.2/include_seq:${C_INCLUDE_PATH}
+        export LD_LIBRARY_PATH=${ASTER_BASE}/public/mumps-5.1.2/lib
+
+        # scotch:
+        export PATH=${ASTER_BASE}/public/scotch-6.0.4/bin:${PATH}
+        export C_INCLUDE_PATH=${ASTER_BASE}/public/scotch-6.0.4/include:${C_INCLUDE_PATH}
+        export LD_LIBRARY_PATH=${ASTER_BASE}/public/scotch-6.0.4/lib:${LD_LIBRARY_PATH}
+
+        # tfel:
+
+        export PATH=${ASTER_BASE}/public/tfel-3.2.1/bin:${PATH}
+        export C_INCLUDE_PATH=${ASTER_BASE}/public/tfel-3.2.1/include:${C_INCLUDE_PATH}
+        export LD_LIBRARY_PATH=${ASTER_BASE}/public/tfel-3.2.1/lib:${LD_LIBRARY_PATH}
+
+
+%help
+        Description of the container.
